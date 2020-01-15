@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <body>
+        <form id="form1" runat="server">
+
+
+            <select id="ddlyear">
+                <option>2010</option>
+                <option>2011</option>
+                <option>2012</option>
+                <option>2013</option>
+                <option>2014</option>
+                <option>2015</option>
+            </select>
+
+            <select id="ddlMonth">
+                <option value="1">Jan</option>
+                <option value="2">Feb</option>
+                <option value="3">Mar</option>.......... ...........
+            </select>
+            <button id="btnGeneratePieChart">Show</button>
+            <br />
+
+            <script type="text/javascript">
+
+                $(document).ready(function () {
+
+                    $("btnGeneratePieChart").on('click', function (e) {
+                        e.preventDefault();
+                        var gData = [];
+                        gData[0] = $("#ddlyear").val();
+                        gData[1] = $("#ddlMonth").val();
+
+                        var jsonData = JSON.stringify({
+                            gData: gData
+                        });
+                        $.ajax({
+                            type: "POST",
+                            url: "WebService.asmx/getTrafficSourceData",
+                            data: jsonData,
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: OnSuccess_,
+                            error: OnErrorCall_
+                        });
+
+                        function OnSuccess_(response) {
+                            var aData = response.d;
+                            var arr = [];
+                            $.each(aData, function (inx, val) {
+                                var obj = {};
+                                obj.color = val.color;
+                                obj.value = val.value;
+                                obj.label = val.label;
+                                arr.push(obj);
+                            });
+                            var ctx = $("#myChart").get(0).getContext("2d");
+                            var myPieChart = new Chart(ctx).Pie(arr);
+                        }
+
+                        function OnErrorCall_(response) { }
+                        e.preventDefault();
+                    });
+                });
+
+            </script>
+
+
+            <canvas id="myChart" width="200" height="200"></canvas>
+
+
+        </form>
+    </body>
+
+</html>

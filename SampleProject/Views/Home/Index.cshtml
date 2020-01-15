@@ -1,0 +1,277 @@
+﻿@{
+    ViewBag.Title = "MyTube - Home";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<body>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <div class="jumbotron col-md-12 col-lg-12 col-sm-12 col-xs-12 text-center">
+        <h1 class=" col-md-12 col-lg-12 col-sm-12 col-xs-6 ">Welcome @User.Identity.Name </h1>
+    </div>
+    <div class="col-md-12 ">
+        @if (Model.Count == 0)
+        {
+            <div class="jumbotron col-md-12 col-lg-12 col-sm-12 col-xs-12 text-center" style="margin-top:20px;background-color:cadetblue">
+                <p>Sorry! No Files to Show</p>
+            </div>
+        }
+        @if (Model.Count > 0)
+        {
+            foreach (var file in Model)
+            {
+                <div class="col-lg-4 col-md-4 col-sm-6">
+                    <video class="VideoPlayer" id=@file.Id onclick="popupmodal('modal@(file.Id)')" width="300" height="250" muted="muted">
+                        <source src="@Url.Content(@file.Path)" type="video/mp4" />
+                    </video><br />
+                    <span>@file.Name</span>
+                    @if (Convert.ToInt32(this.Session["role_id"]) == 1)
+                    {
+                        <span>
+                            <button type="button" title="Delete this File" class="btn btn-danger glyphicon glyphicon-trash" onclick="deleteFile(@file.Id)"> Delete</button>
+                        </span>
+                    }
+                    else
+                    {
+                        <span>
+                            <button type="button" title="Delete this File" class="btn btn-primary glyphicon glyphicon-download-alt" onclick="downloadfile(@file.Id)"> Download</button>
+                        </span>
+                    }
+                </div>
+                <div class="modal fade sam" id="modal@(file.Id)" data-backdrop="static" role="dialog" data-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">@file.Name</h5>
+                                <button type="button" class="close vidpause" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body col-md-12 col-sm-12 col-xs-12">
+                                <video class="VideoPlayer" controls="true" onclick="videoView(@file.Id,'@file.Name')" width="1070" height="450">
+                                    <source src="@Url.Content(@file.Path)" type="video/mp4" />
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+    <div>
+        <input type="hidden" id="usrname" value="@User.Identity.Name" />
+    </div>
+    <div class="modal fade" id="chatModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content1">
+                <div class="modal-body">
+                    <div class="chat-panel panel panel-default">
+                        <div class="panel-heading">
+                            Chat Box
+                            <i class="fa fa-paper-plane fa-fw"></i>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body" id="chat" style="height:320px;">
+                            <input type="hidden" id="displayname" />
+
+                            <p id="discussion"></p>
+                        </div>
+                        <!-- /.panel-body -->
+                        <div class="panel-footer">
+                            <div class="input-group">
+                                <input id="message" type="text" name="message" class="form-control input-sm" placeholder="Type your message here..." />
+
+                                <span class="input-group-btn">
+                                    <input type="submit" class="btn btn-warning btn-sm" id="sendmessage" value="Send">
+
+                                </span>
+
+                            </div>
+                            --Click to exit Chat--
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+@section scripts {
+
+    <script>
+        $(document).ready(function () {
+            $(".VideoPlayer").mouseenter(function (element) {
+
+                $('#' + element.target.id)[0].play();
+            })
+            $(".VideoPlayer").mouseleave(function (element) {
+
+                $('#' + element.target.id)[0].pause();
+            })
+            $(".vidpause").click(function (element) {
+
+                $(element.target.parentElement.parentElement.parentElement).find('.VideoPlayer')[0].pause()
+            })
+            $('.modal-dialog').resizable({
+                //alsoResize: ".modal-dialog",
+                minHeight: 300,
+                minWidth: 300
+            });
+            $('.modal-dialog').draggable();
+
+            $('.sam').on('show.bs.modal', function () {
+
+                $(this).find('.modal-body').css({
+                    'max-height': '100%'
+                });
+            });
+
+        });
+        function popupmodal(elementid) {
+
+            $('#' + elementid).modal('show')
+        }
+
+    </script>
+
+    <script>
+
+        function videoView(id, name) {
+
+            var usrname = $('#usrname').val()
+            if (usrname == "admin") {
+                return false;
+            }
+            else {
+                var videoId = id
+                var Videoname = name
+                $.ajax(
+                    {
+                        url: '/Home/VideoView',
+                        type: 'post',
+                        data: {
+                            VideoId: videoId,
+                            VideoName: Videoname
+                        },
+                        success: function (response) {
+
+                        },
+                        error: function (error) {
+                        }
+                    })
+            }
+        }
+    </script>
+
+    <script>
+
+        //deletefile
+
+        function deleteFile(id) {
+            var deleteFileId = id;
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: '/Home/DeleteFile',
+                        type: 'post',
+                        async: true,
+                        data: { deleteId: deleteFileId },
+                        success: function (response) {
+                            Swal.fire(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                                'success'
+                            ).then(() => {
+                                location.reload()
+                            })
+                        },
+                        error: function (error) {
+                            alert("Error Happened.Try again later.")
+                        }
+                    })
+                }
+            })
+        }
+        //downloadfile
+        function downloadfile(id) {
+            Swal.fire(
+                'Download Started',
+                'Your file will start download now!',
+                'success'
+            ).then(() => {
+                window.location.href = '/Home/DownloadFile/?id=' + id;
+            })
+        }
+    </script>
+    <script>
+        function popmodal() {
+            Swal.fire(
+                'Welcome to Chat Help',
+                'Ask your Queries Here!',
+                'info'
+            ).then(() => {
+                $('#chatModel').modal('show')
+            });
+        }
+
+    </script>
+
+
+
+    <script src="~/signalr/hubs"></script>
+    <script>
+        $(function () {
+            var chat = $.connection.chatHub;
+
+            chat.client.addNewMessageToPage = function (@User.Identity.Name, message) {
+                if ( @User.Identity.Name === "admin")
+                {
+                    $('#discussion').append('<p style="color:green; text-align:left;text-transform:inherit; width:500px"><strong><img = src="https://www.phplivesupport.com/pics/icons/avatars/public/avatar_7.png" title="Admin">'
+                        + ' </strong> ' + htmlEncode(message) + '</p>');
+
+                }
+                else if ( @User.Identity.Name != "admin") {
+
+                    $('#discussion').append('<p style="color:blue;text-align:right;"><strong><img = src="https://www.phplivesupport.com/pics/icons/avatars/public/avatar_71.png" title="User">'
+                        + ' </strong> ' + htmlEncode(message) + '</p>');
+
+                }
+                $('.panel-body').scrollTop($('#discussion')[0].scrollHeight)
+            };
+
+           // $('#displayname').val(prompt('Enter your name:', ''));
+
+            $('#message').focus();
+
+            $.connection.hub.start().done(function () {
+                $('#sendmessage').click(function () {
+
+                    chat.server.send(('@User.Identity.Name'), $('#message').val());
+
+                    $('#message').val('').focus();
+                });
+            });
+        });
+        // This optional function html-encodes messages for display in the page.
+        function htmlEncode(value) {
+            var encodedValue = $('<div />').text(value).html();
+            return encodedValue;
+        }
+    </script>
+}

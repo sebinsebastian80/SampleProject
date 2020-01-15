@@ -1,0 +1,78 @@
+﻿
+header {
+    position: relative;
+    background-color: black;
+    height: 25vh;
+    min-height: 10rem;
+    width: 15rem;
+    overflow: hidden;
+}
+
+header video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 200px;
+    min-height: 200px;
+    width: auto;
+    height: auto;
+    z-index: 0;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+}
+
+header .container {
+    position: relative;
+    z-index: 2;
+}
+
+header .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    opacity: 0.5;
+    z-index: 1;
+}
+
+@media (pointer: coarse) and (hover: none) {
+    header {
+        background: url('https://source.unsplash.com/XT5OInaElMw/1600x900') black no-repeat center center scroll;
+    }
+
+        header video {
+            display: none;
+        }
+}
+
+body {
+    font-family: Arial;
+    font-size: 10pt;
+}
+
+.ui-widget-header {
+    background: #cedc98;
+    border: 1px solid #DDDDDD;
+    color: #333333;
+    font-weight: bold;
+}
+
+.progress-label {
+    position: absolute;
+    left: 50%;
+    top: 13px;
+    font-weight: bold;
+    text-shadow: 1px 1px 0 #fff;
+}
+
+.red {
+    color: red;
+}
+div.panel-body {
+    overflow: scroll;
+    background: url('http://subtlepatterns.com/patterns/geometry2.png');
+}
