@@ -17,6 +17,7 @@
     <Property Name="NoOfView" Type="int" />
     <Property Name="ViewDate" Type="datetime" />
     <Property Name="VideoId" Type="int" />
+    <Property Name="downloadcount" Type="int" />
   </EntityType>
   <EntityContainer Name="dbFilesModelStoreContainer">
     <EntitySet Name="Files" EntityType="Self.Files" Schema="dbo" store:Type="Tables" />

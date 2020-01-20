@@ -84,11 +84,8 @@ namespace SampleProject.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
-        [DefaultValue(2)]
-        public int role_id { get; set; }
-
-    
-
+       
+        public int role_id { get; set; }    
     }
 
     public class ResetPasswordViewModel

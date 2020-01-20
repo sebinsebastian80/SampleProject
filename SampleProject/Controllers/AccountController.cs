@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -90,11 +91,14 @@ namespace SampleProject.Controllers
         {
             try
             {
+                
+                
                 // Setting.    
                 var ctx = Request.GetOwinContext();
                 var authenticationManager = ctx.Authentication;
                 // Sign Out.    
                 authenticationManager.SignOut();
+                Session.Abandon();
             }
             catch (Exception ex)
             {
@@ -168,11 +172,12 @@ namespace SampleProject.Controllers
 
                     db.Logins.Add(relog);
                     db.SaveChanges();
+                    return RedirectToAction("Login", "Account");
                 }
 
                
             }
-            return RedirectToAction("Index", "Home");
+            return this.View();
         }
     }
 }

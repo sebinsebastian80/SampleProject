@@ -5,10 +5,21 @@
       <Parameter Name="username" Mode="In" Type="String" />
       <Parameter Name="password" Mode="In" Type="String" />
     </FunctionImport>
+    <EntitySet Name="videoviews" EntityType="AdoNetIntegrationModel.videoview" />
   </EntityContainer>
   <ComplexType Name="LoginByUsernamePassword_Result">
     <Property Type="Int32" Name="id" Nullable="false" />
     <Property Type="String" Name="username" Nullable="false" MaxLength="50" />
     <Property Type="String" Name="password" Nullable="false" MaxLength="50" />
   </ComplexType>
+  <EntityType Name="videoview">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="VideoName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="NoOfView" Type="Int32" />
+    <Property Name="ViewDate" Type="DateTime" Precision="3" />
+    <Property Name="VideoId" Type="Int32" />
+  </EntityType>
 </Schema>

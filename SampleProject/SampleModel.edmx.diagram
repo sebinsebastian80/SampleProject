@@ -4,7 +4,9 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e21246291f15438d9a58e71ab3656fdf" Name="Diagram1" />
+      <Diagram DiagramId="e21246291f15438d9a58e71ab3656fdf" Name="Diagram1" >
+        <EntityTypeShape EntityType="AdoNetIntegrationModel.videoview" Width="1.5" PointX="0.75" PointY="0.75" />
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

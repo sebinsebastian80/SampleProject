@@ -5876,16 +5876,18 @@ button.close {
   overflow: hidden;
 }
 .modal {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1050;
-  display: none;
-  overflow: hidden;
-  -webkit-overflow-scrolling: touch;
-  outline: 0;
+    text-align: center;
+    position: center;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1050;
+    display: none;
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch;
+    outline: 0;
+    padding: 0 !important;
 }
 .modal.fade .modal-dialog {
   -webkit-transition: -webkit-transform .3s ease-out;
@@ -5913,7 +5915,7 @@ button.close {
 }
 .modal-content {
   position:absolute;
-  width:1124px;
+  width:828px;
   height:560px;
   background-color: #fff;
   -webkit-background-clip: padding-box;

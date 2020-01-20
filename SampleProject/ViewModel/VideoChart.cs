@@ -11,6 +11,6 @@ namespace SampleProject.ViewModel
         public string VideoName { get; set; }
         public Nullable<int> NoOfView { get; set; }
         public string ViewDate { get; set; }
- 
+ public int downloadcount { get; set; }
     }
 }

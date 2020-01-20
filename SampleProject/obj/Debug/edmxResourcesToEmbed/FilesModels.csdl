@@ -21,5 +21,6 @@
     <Property Name="NoOfView" Type="Int32" />
     <Property Name="ViewDate" Type="DateTime" Precision="3" />
     <Property Name="VideoId" Type="Int32" />
+    <Property Name="downloadcount" Type="Int32" />
   </EntityType>
 </Schema>

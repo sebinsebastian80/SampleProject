@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="VideoViewModelStoreContainer" CdmEntityContainer="VideoViewEntities">
+    <EntitySetMapping Name="videoviews">
+      <EntityTypeMapping TypeName="VideoViewModel.videoview">
+        <MappingFragment StoreEntitySet="videoview">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="VideoName" ColumnName="VideoName" />
+          <ScalarProperty Name="NoOfView" ColumnName="NoOfView" />
+          <ScalarProperty Name="ViewDate" ColumnName="ViewDate" />
+          <ScalarProperty Name="VideoId" ColumnName="VideoId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,14 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="AdoNetIntegrationModelStoreContainer" CdmEntityContainer="AdoNetIntegrationEntities">
-    <FunctionImportMapping FunctionImportName="LoginByUsernamePassword" FunctionName="AdoNetIntegrationModel.Store.LoginByUsernamePassword">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="AdoNetIntegrationModel.LoginByUsernamePassword_Result">
+    <EntitySetMapping Name="videoviews">
+      <EntityTypeMapping TypeName="AdoNetIntegrationModel.videoview">
+        <MappingFragment StoreEntitySet="videoview">
+          <ScalarProperty Name="VideoId" ColumnName="VideoId" />
+          <ScalarProperty Name="ViewDate" ColumnName="ViewDate" />
+          <ScalarProperty Name="NoOfView" ColumnName="NoOfView" />
+          <ScalarProperty Name="VideoName" ColumnName="VideoName" />
           <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="username" ColumnName="username" />
-          <ScalarProperty Name="password" ColumnName="password" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

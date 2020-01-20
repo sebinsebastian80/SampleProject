@@ -3,7 +3,7 @@
     Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
 }
 
-
+<script src="~/Scripts/bootstrap2-toggle.js"></script>
 <script src="~/Scripts/jquery-3.3.1.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
@@ -23,37 +23,46 @@
         {
             foreach (var file in Model)
             {
-                <div class="col-lg-4 col-md-4 col-sm-6">
-                    <video class="VideoPlayer" id=@file.Id onclick="popupmodal('modal@(file.Id)')" width="300" height="250" muted="muted">
-                        <source src="@Url.Content(@file.Path)" type="video/mp4" />
-                    </video><br />
-                    <span>@file.Name</span>
-                    @if (Convert.ToInt32(this.Session["role_id"]) == 1)
-                    {
-                        <span>
-                            <button type="button" title="Delete this File" class="btn btn-danger glyphicon glyphicon-trash" onclick="deleteFile(@file.Id)"> Delete</button>
-                        </span>
-                    }
-                    else
-                    {
-                        <span>
-                            <button type="button" title="Delete this File" class="btn btn-primary glyphicon glyphicon-download-alt" onclick="downloadfile(@file.Id)"> Download</button>
-                        </span>
-                    }
-                </div>
-                <div class="modal fade sam" id="modal@(file.Id)" data-backdrop="static" role="dialog" data-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">@file.Name</h5>
-                                <button type="button" class="close vidpause" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body col-md-12 col-sm-12 col-xs-12">
-                                <video class="VideoPlayer" controls="true" onclick="videoView(@file.Id,'@file.Name')" width="1070" height="450">
-                                    <source src="@Url.Content(@file.Path)" type="video/mp4" />
-                                </video>
+                <div class="col-md-4">
+                    <div class="card mb-4 box-shadow">
+                        <video class="VideoPlayer" id=@file.Id onclick="popupmodal('modal@(file.Id)')" width="336" height="200" muted="muted">
+                            <source src="@Url.Content(@file.Path)" type="video/mp4" />
+                        </video><br />
+                        <div class="card-body">
+                            <p class="card-text">@file.Name</p>
+                            @if (Convert.ToInt32(this.Session["role_id"]) == 1)
+                            {
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" title="Delete this File" class="btn btn-danger glyphicon glyphicon-trash" onclick="deleteFile(@file.Id)"> Delete</button>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" title="Download this File" class="btn btn-primary glyphicon glyphicon-download-alt" onclick="downloadfile(@file.Id,'@file.Name')"> Download</button>
+                                    </div>
+                                    <a href="javascript:alert(document.lastModified)"></a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="modal fade sam" id="modal@(file.Id)" data-backdrop="static" role="dialog" data-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">@file.Name</h5>
+                                    <button type="button" class="close vidpause btn-danger" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body col-md-12 col-sm-12 col-xs-12">
+                                    <video class="VideoPlayer" controls="true" onclick="videoView(@file.Id,'@file.Name')" width="800" height="450">
+                                        <source src="@Url.Content(@file.Path)" type="video/mp4" />
+                                    </video>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -76,37 +85,29 @@
                         <!-- /.panel-heading -->
                         <div class="panel-body" id="chat" style="height:320px;">
                             <input type="hidden" id="displayname" />
-
                             <p id="discussion"></p>
                         </div>
                         <!-- /.panel-body -->
                         <div class="panel-footer">
                             <div class="input-group">
                                 <input id="message" type="text" name="message" class="form-control input-sm" placeholder="Type your message here..." />
-
                                 <span class="input-group-btn">
                                     <input type="submit" class="btn btn-warning btn-sm" id="sendmessage" value="Send">
-
                                 </span>
-
                             </div>
                             --Click to exit Chat--
                         </div>
                     </div>
-
                 </div>
-
             </div>
         </div>
     </div>
-
 </body>
 @section scripts {
-
     <script>
         $(document).ready(function () {
-            $(".VideoPlayer").mouseenter(function (element) {
 
+            $(".VideoPlayer").mouseenter(function (element) {
                 $('#' + element.target.id)[0].play();
             })
             $(".VideoPlayer").mouseleave(function (element) {
@@ -138,7 +139,6 @@
         }
 
     </script>
-
     <script>
 
         function videoView(id, name) {
@@ -167,7 +167,6 @@
             }
         }
     </script>
-
     <script>
 
         //deletefile
@@ -209,13 +208,35 @@
             })
         }
         //downloadfile
-        function downloadfile(id) {
+        function downloadfile(id, name) {
+
+
             Swal.fire(
                 'Download Started',
                 'Your file will start download now!',
                 'success'
             ).then(() => {
                 window.location.href = '/Home/DownloadFile/?id=' + id;
+            })
+            var videoId = id
+            var Videoname = name
+
+            $.ajax({
+
+
+                url: '/Home/downloadCount',
+                type: 'post',
+                data: {
+                    VideoId: videoId,
+                    VideoName: Videoname
+
+                },
+                success: function (response) {
+
+                },
+                error: function (error) {
+                }
+
             })
         }
     </script>
@@ -231,8 +252,6 @@
         }
 
     </script>
-
-
 
     <script src="~/signalr/hubs"></script>
     <script>

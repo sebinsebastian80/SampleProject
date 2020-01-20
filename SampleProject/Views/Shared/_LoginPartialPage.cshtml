@@ -13,9 +13,10 @@
                 <div class="sidebar-content">
                     <!-- sidebar-brand  -->
                     <div class="sidebar-item sidebar-brand">
-                        <a href="http://localhost:60267/Home/Index"><span class=" glyphicon glyphicon-qrcode">MyTube</span></a>
+                       <img src="~/img/vippng.com-youtube-play-logo-png-110186.png" alt="" width="25" height="20" />
+                        <a href="http://localhost:60267/Home/Index"><span>MyTube</span></a>
                         <span>
-                            
+                           
                             <a id="pin-sidebar" class="btn btn-outline-secondary rounded-0" href="#">
                                 <span class="fa fa-toggle-on"></span>
                             </a>
@@ -28,7 +29,7 @@
                         </div>
                         <div class="user-info">
                             <span class="user-name">
-                          @User.Identity.Name
+                        Welcome @User.Identity.Name
                                 <strong></strong>
                             </span>
                             <span class="user-role">Administrator</span>
@@ -49,21 +50,21 @@
                                 <a href="#">
                                     <i class="fa fa-tachometer-alt"></i>
                                     <span class="menu-text">Dashboard</span>
-                                    <span class="badge badge-pill badge-warning">New</span>
+                                    @*<span class=" badge-pill badge-warning">New</span>*@
                                 </a>
                             </li>
                             <li class="sidebar">
                                 <a href="~/Upload/AdminOnlyLink">
                                     <i class="fa fa-tachometer-alt"></i>
                                     <span class="menu-text">Upload New Video</span>
-                                    <span class="badge badge-pill badge-warning">New</span>
+                                    @*<span class=" badge-pill btn-warning">New</span>*@
                                 </a>
                             </li>
                             <li class="sidebar">
                                 <a href="~/Chart/Index" />
                                 <i class="fa fa-chart-line"></i>
                                 <span class="menu-text">Charts</span>
-                                <span class="badge badge-pill badge-primary">New</span>
+                                @*<span class=" badge-pill badge-primary">New</span>*@
                             </li>
                             <li class="sidebar">
                                 <a href="#" onclick="popmodal()" >
@@ -158,9 +159,10 @@
                 <div class="sidebar-content" style="color:aquamarine;">
                     <!-- sidebar-brand  -->
                     <div class="sidebar-item sidebar-brand">
-                        <a href="http://localhost:60267/Home/Index"><span class="glyphicon glyphicon-qrcode">MyTube</span></a>
+                        <img src="~/img/vippng.com-youtube-play-logo-png-110186.png" alt="" width="25" height="20" />
+                        <a href="http://localhost:60267/Home/Index"><span >MyTube</span></a>
                         <span>
-                            
+
                             <a id="pin-sidebar" class="btn btn-outline-secondary rounded-0" href="#">
                                 <span class="fa fa-toggle-on"></span>
                             </a>
@@ -194,7 +196,7 @@
                                 <a href="#">
                                     <i class="fa fa-tachometer-alt"></i>
                                     <span class="menu-text">Dashboard</span>
-                                    <span class="badge badge-pill badge-warning">New</span>
+                                    <span class="badge-pill badge-warning">New</span>
                                 </a>
 
                             </li>
@@ -202,7 +204,7 @@
                                 <a href="#">
                                     <i class="fa fa-book"></i>
                                     <span class="menu-text">New Videos</span>
-                                    <span class="badge badge-pill badge-success">New</span>
+                                    <span class="badge-pill badge-success">New</span>
                                 </a>
 
                             </li>
@@ -236,14 +238,14 @@
                                 <a href="#">
                                     <i class="fa fa-book"></i>
                                     <span class="menu-text">Live Video</span>
-                                    <span class="badge badge-pill badge-primary">Upcoming</span>
+                                    <span class=" badge-pill badge-primary">Upcoming</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
                                     <i class="fa fa-calendar"></i>
                                     <span class="menu-text">News Letter</span>
-                                    <span class="badge badge-pill badge-primary">Upcoming</span>
+                                    <span class=" badge-pill badge-primary">Upcoming</span>
                                 </a>
                             </li>
                             <li>
@@ -327,9 +329,6 @@
                     </div>
                 </div>
             </nav>
-        }
-
-
-    }
+            }         
 }
 }

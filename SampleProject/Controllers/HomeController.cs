@@ -1,6 +1,5 @@
 ﻿
-namespace SampleProject.Controllers
-{
+
     using SampleProject.Models;
     using System.Configuration;
     using System.Data.SqlClient;
@@ -15,11 +14,13 @@ namespace SampleProject.Controllers
     using System.Net.Http.Headers;
     using System.Web.UI.WebControls;
     using System.Data;
-
+    using System.Data.Entity;
+namespace SampleProject.Controllers
+{
     [Authorize]
     public class HomeController : Controller
     {
-      
+        
         // GET: Upload
         public ActionResult Index()
         {
@@ -74,25 +75,63 @@ namespace SampleProject.Controllers
         }
         public ActionResult VideoView(int VideoId,string VideoName)
         {
+            AdoNetIntegrationEntities db = new AdoNetIntegrationEntities();
             try
             {
                 int VId = VideoId;
                 string Vname = VideoName;
+
+                var todaydate = DateTime.Now.Date.ToString("yyyy-MM-dd");
+
                 string maincon = ConfigurationManager.ConnectionStrings["FilesEntities"].ConnectionString;
                 SqlConnection sqlconn = new SqlConnection(maincon);
 
-                SqlCommand cmd = new SqlCommand("spVideoCount", sqlconn);
+                SqlCommand cmd = new SqlCommand("spVideoCountNew", sqlconn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("VideoName", Vname);
                 cmd.Parameters.AddWithValue("videoId", VId);
 
-                cmd.Parameters.AddWithValue("Viewdate", DateTime.Now.Date);
+                cmd.Parameters.AddWithValue("Viewdate", todaydate);
                 sqlconn.Open();
                 cmd.ExecuteNonQuery();
                 sqlconn.Close();
+
+
                 return Json("sucess");
-                    }
+            }
             catch(Exception ex)
+            {
+                return Json(ex.Message);
+            }
+
+        }
+        public ActionResult downloadCount(int VideoId, string VideoName)
+        {
+         
+            try
+            {
+                int VId = VideoId;
+                string Vname = VideoName;
+
+                var todaydate = DateTime.Now.Date.ToString("yyyy-MM-dd");
+
+                string maincon = ConfigurationManager.ConnectionStrings["FilesEntities"].ConnectionString;
+                SqlConnection sqlconn = new SqlConnection(maincon);
+
+                SqlCommand cmd = new SqlCommand("spDownloadCount", sqlconn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("VideoName", Vname);
+                cmd.Parameters.AddWithValue("videoId", VId);
+
+                cmd.Parameters.AddWithValue("Viewdate", todaydate);
+                sqlconn.Open();
+                cmd.ExecuteNonQuery();
+                sqlconn.Close();
+
+
+                return Json("sucess");
+            }
+            catch (Exception ex)
             {
                 return Json(ex.Message);
             }

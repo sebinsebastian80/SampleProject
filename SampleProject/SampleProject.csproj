@@ -207,7 +207,7 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="LoginByUsernamePassword_Result.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>SampleModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model1.Context.cs">
       <AutoGen>True</AutoGen>
@@ -264,6 +264,7 @@
     <Content Include="Content\bootstrap2-toggle.css" />
     <Content Include="Content\bootstrap2-toggle.min.css" />
     <Content Include="Content\main.css" />
+    <Content Include="Content\newstyle.css" />
     <Content Include="Content\sidebar-themes.css" />
     <Content Include="Content\Style.css" />
     <Content Include="Content\sweetalert\bootstrap-sweetalert.png" />
@@ -334,6 +335,7 @@
     <Content Include="img\sebin.png" />
     <Content Include="img\user.jpg" />
     <Content Include="img\user.png" />
+    <Content Include="img\vippng.com-youtube-play-logo-png-110186.png" />
     <Content Include="Login.html" />
     <Content Include="Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

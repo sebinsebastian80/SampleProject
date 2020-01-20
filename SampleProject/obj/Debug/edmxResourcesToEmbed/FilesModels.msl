@@ -13,6 +13,7 @@
     <EntitySetMapping Name="videoviews">
       <EntityTypeMapping TypeName="dbFilesModel.videoview">
         <MappingFragment StoreEntitySet="videoview">
+          <ScalarProperty Name="downloadcount" ColumnName="downloadcount" />
           <ScalarProperty Name="VideoId" ColumnName="VideoId" />
           <ScalarProperty Name="ViewDate" ColumnName="ViewDate" />
           <ScalarProperty Name="NoOfView" ColumnName="NoOfView" />

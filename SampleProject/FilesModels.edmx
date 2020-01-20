@@ -22,6 +22,7 @@
           <Property Name="NoOfView" Type="int" />
           <Property Name="ViewDate" Type="datetime" />
           <Property Name="VideoId" Type="int" />
+          <Property Name="downloadcount" Type="int" />
         </EntityType>
         <EntityContainer Name="dbFilesModelStoreContainer">
           <EntitySet Name="Files" EntityType="Self.Files" Schema="dbo" store:Type="Tables" />
@@ -52,6 +53,7 @@
           <Property Name="NoOfView" Type="Int32" />
           <Property Name="ViewDate" Type="DateTime" Precision="3" />
           <Property Name="VideoId" Type="Int32" />
+          <Property Name="downloadcount" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -71,6 +73,7 @@
           <EntitySetMapping Name="videoviews">
             <EntityTypeMapping TypeName="dbFilesModel.videoview">
               <MappingFragment StoreEntitySet="videoview">
+                <ScalarProperty Name="downloadcount" ColumnName="downloadcount" />
                 <ScalarProperty Name="VideoId" ColumnName="VideoId" />
                 <ScalarProperty Name="ViewDate" ColumnName="ViewDate" />
                 <ScalarProperty Name="NoOfView" ColumnName="NoOfView" />
