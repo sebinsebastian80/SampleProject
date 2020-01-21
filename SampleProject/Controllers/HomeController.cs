@@ -18,6 +18,7 @@
 namespace SampleProject.Controllers
 {
     [Authorize]
+   
     public class HomeController : Controller
     {
         

@@ -9,6 +9,7 @@
     <Property Name="password" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" Type="String" />
     <Property Name="role_id" Nullable="false" Type="Int32" />
     <NavigationProperty Name="Role" Relationship="Self.R_10" FromRole="Login" ToRole="Role" />
+    <Property Name="email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Role">
     <Key>
@@ -40,8 +41,8 @@
       <End EntitySet="Logins" Role="Login" />
     </AssociationSet>
     <FunctionImport Name="LoginByUsernamePassword" ReturnType="Collection(RoleBaseAccessibilityModel.LoginByUsernamePassword_Result)">
-      <Parameter Name="username" Type="String" Mode="In" />
-      <Parameter Name="password" Type="String" Mode="In" />
+      <Parameter Name="username" Mode="In" Type="String" />
+      <Parameter Name="password" Mode="In" Type="String" />
     </FunctionImport>
   </EntityContainer>
   <ComplexType Name="LoginByUsernamePassword_Result">

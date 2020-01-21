@@ -22,7 +22,8 @@ public partial class LoginByUsernamePassword_Result
     public string username { get; set; }
 
     public string password { get; set; }
-        public int role_id { get; set; }
+
+    public int role_id { get; set; }
 
 }
 

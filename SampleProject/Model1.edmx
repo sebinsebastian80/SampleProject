@@ -4,37 +4,24 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Alias="Self" Namespace="RoleBaseAccessibilityModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012">
+    <Schema Namespace="RoleBaseAccessibilityModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Login">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
-          <Property Name="username" Nullable="false" MaxLength="50" Type="varchar" />
-          <Property Name="password" Nullable="false" MaxLength="50" Type="varchar" />
-          <Property Name="role_id" Nullable="false" Type="int" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="role_id" Type="int" Nullable="false" />
+          <Property Name="email" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="role_id" />
           </Key>
-          <Property Name="role_id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
-          <Property Name="role" Nullable="false" Type="nvarchar(max)" />
+          <Property Name="role_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="role" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
-        <Association Name="R_10">
-          <End Type="Self.Role" Multiplicity="1" Role="Role">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="Self.Login" Multiplicity="*" Role="Login" />
-          <ReferentialConstraint>
-            <Principal Role="Role">
-              <PropertyRef Name="role_id" />
-            </Principal>
-            <Dependent Role="Login">
-              <PropertyRef Name="role_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Function Name="LoginByUsernamePassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="username" Type="varchar" Mode="In" />
           <Parameter Name="password" Type="varchar" Mode="In" />
@@ -42,13 +29,8 @@
         <EntityContainer Name="RoleBaseAccessibilityModelStoreContainer">
           <EntitySet Name="Login" EntityType="Self.Login" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="R_10" Association="Self.R_10">
-            <End EntitySet="Role" Role="Role" />
-            <End EntitySet="Login" Role="Login" />
-          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="RoleBaseAccessibilityModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -61,6 +43,7 @@
           <Property Name="password" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" Type="String" />
           <Property Name="role_id" Nullable="false" Type="Int32" />
           <NavigationProperty Name="Role" Relationship="Self.R_10" FromRole="Login" ToRole="Role" />
+          <Property Name="email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -92,8 +75,8 @@
             <End EntitySet="Logins" Role="Login" />
           </AssociationSet>
           <FunctionImport Name="LoginByUsernamePassword" ReturnType="Collection(RoleBaseAccessibilityModel.LoginByUsernamePassword_Result)">
-            <Parameter Name="username" Type="String" Mode="In" />
-            <Parameter Name="password" Type="String" Mode="In" />
+            <Parameter Name="username" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="LoginByUsernamePassword_Result">
@@ -111,6 +94,7 @@
           <EntitySetMapping Name="Logins">
             <EntityTypeMapping TypeName="RoleBaseAccessibilityModel.Login">
               <MappingFragment StoreEntitySet="Login">
+                <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="password" ColumnName="password" />

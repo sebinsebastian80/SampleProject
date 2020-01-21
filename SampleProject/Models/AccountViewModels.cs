@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Cryptography;
+using System.Web.Security;
+using SampleProject.Models;
 
 namespace SampleProject.Models
 {
@@ -68,10 +72,17 @@ namespace SampleProject.Models
 
     public class RegisterViewModel
     {
+
         [Required]
         
         [Display(Name = "User Name")]
         public string UserName { get; set; }
+
+
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]

@@ -4,6 +4,7 @@
     <EntitySetMapping Name="Logins">
       <EntityTypeMapping TypeName="RoleBaseAccessibilityModel.Login">
         <MappingFragment StoreEntitySet="Login">
+          <ScalarProperty Name="email" ColumnName="email" />
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="username" ColumnName="username" />
           <ScalarProperty Name="password" ColumnName="password" />

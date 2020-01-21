@@ -26,6 +26,8 @@ public partial class Login
 
     public int role_id { get; set; }
 
+    public string email { get; set; }
+
 
 
     public virtual Role Role { get; set; }
