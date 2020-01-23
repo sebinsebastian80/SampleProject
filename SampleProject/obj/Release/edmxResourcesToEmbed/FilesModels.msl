@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="dbFilesModelStoreContainer" CdmEntityContainer="dbFilesEntities">
+    <EntitySetMapping Name="Files">
+      <EntityTypeMapping TypeName="dbFilesModel.File">
+        <MappingFragment StoreEntitySet="Files">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Path" ColumnName="Path" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="videoviews">
+      <EntityTypeMapping TypeName="dbFilesModel.videoview">
+        <MappingFragment StoreEntitySet="videoview">
+          <ScalarProperty Name="downloadcount" ColumnName="downloadcount" />
+          <ScalarProperty Name="VideoId" ColumnName="VideoId" />
+          <ScalarProperty Name="ViewDate" ColumnName="ViewDate" />
+          <ScalarProperty Name="NoOfView" ColumnName="NoOfView" />
+          <ScalarProperty Name="VideoName" ColumnName="VideoName" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

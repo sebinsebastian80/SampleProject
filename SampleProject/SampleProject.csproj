@@ -59,6 +59,9 @@
       <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.4.1\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Scrypt, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Scrypt.NET.1.3.0\lib\net20\Scrypt.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -181,7 +184,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SweetController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
-    <Compile Include="DataContext.cs" />
     <Compile Include="File.cs">
       <DependentUpon>FilesModels.tt</DependentUpon>
     </Compile>
@@ -229,6 +231,16 @@
     <Compile Include="Models\passwordHelper.cs" />
     <Compile Include="Models\SessionActionFliter.cs" />
     <Compile Include="Models\UploadClass.cs" />
+    <Compile Include="Resources\HomeText.fr.Designer.cs">
+      <DependentUpon>HomeText.fr.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\HomeText.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HomeText.resx</DependentUpon>
+    </Compile>
     <Compile Include="signalr\hubs\ChatHub.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Role.cs">
@@ -256,7 +268,6 @@
     <Compile Include="ViewModel\VideoChart.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="charthtml.html" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap-toggle.css" />
@@ -328,7 +339,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="HtmlPage1.html" />
     <Content Include="img\bg1.jpg" />
     <Content Include="img\bg2.jpg" />
     <Content Include="img\bg3.jpg" />
@@ -338,7 +348,6 @@
     <Content Include="img\user.jpg" />
     <Content Include="img\user.png" />
     <Content Include="img\vippng.com-youtube-play-logo-png-110186.png" />
-    <Content Include="Login.html" />
     <Content Include="Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>
@@ -393,17 +402,7 @@
     <Content Include="Scripts\bootstrap2-toggle.min.js" />
     <Content Include="Scripts\bootstrap2-toggle.min.js.map" />
     <Content Include="Scripts\bootstrap-toggle.min.js.map" />
-    <Content Include="sass\main.scss" />
-    <Content Include="sass\sidebar-themes.scss" />
-    <Content Include="sass\_animation.scss" />
-    <Content Include="sass\_mixin.scss" />
-    <Content Include="sass\_sidebar-brand.scss" />
-    <Content Include="sass\_sidebar-footer.scss" />
-    <Content Include="sass\_sidebar-header.scss" />
-    <Content Include="sass\_sidebar-menu.scss" />
-    <Content Include="sass\_sidebar-search.scss" />
-    <Content Include="sass\_sidebar-wrapper.scss" />
-    <Content Include="sass\_variables.scss" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -436,7 +435,6 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Upload\AdminOnlyLink.cshtml" />
-    <Content Include="Views\Chat\Chat.cshtml" />
     <Content Include="Views\Chart\Index.cshtml" />
     <Content Include="Views\Sweet\Index.cshtml" />
     <Content Include="Views\Shared\_AdminLayoutPage.cshtml" />
@@ -462,6 +460,16 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\HomeText.fr.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>HomeText.fr.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HomeText.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>HomeText.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

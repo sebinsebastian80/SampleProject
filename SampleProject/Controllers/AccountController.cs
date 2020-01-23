@@ -15,6 +15,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SampleProject.Models;
+using Scrypt;
 
 
 
@@ -58,55 +59,55 @@ namespace SampleProject.Controllers
 
         public ActionResult Login(LoginViewModel model, string returnUrl)
         {
-            string Decrypt(string clearText)
-            {
-                string EncryptionKey = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
-                byte[] clearBytes = Encoding.Unicode.GetBytes(clearText);
-                using (Aes encryptor = Aes.Create())
-                {
-                    Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
-                    encryptor.Key = pdb.GetBytes(32);
-                    encryptor.IV = pdb.GetBytes(16);
-                    using (MemoryStream ms = new MemoryStream())
-                    {
-                        using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateEncryptor(), CryptoStreamMode.Write))
-                        {
-                            cs.Write(clearBytes, 0, clearBytes.Length);
-                            cs.Close();
-                        }
-                        clearText = Convert.ToBase64String(ms.ToArray());
-                    }
-                }
-                return clearText;
-            }
+            
 
             try
             {
-     
+
                 // Verification.    
-                if (ModelState.IsValid)
-                {
-                    // Initialization.    
-                    var loginInfo = this.databaseManager.LoginByUsernamePassword(model.Username, Decrypt(model.Password).Trim()).ToList();
-                    // Verification.    
-                    if (loginInfo != null && loginInfo.Count() > 0)
+                  ScryptEncoder encoder = new ScryptEncoder();
+                    using (var db = new RoleBaseAccessibilityEntities())
                     {
-                        // Initialization.    
-                        var logindetails = loginInfo.First();
-                        // Login In.    
-                        this.SignInUser(logindetails.username, logindetails.role_id, false);
-                        // setting.    
-                        this.Session["role_id"] = logindetails.role_id;
+                        var validcustomer = (from c in db.Logins
+                                             where c.username.Equals(model.Username)
+                                             select c).SingleOrDefault();
+
+                        if (validcustomer == null)
+                        {
+                            ViewBag.message = "Invalid username or password";
+                            return View();
+                        }
+                        bool isvalidcustomer = encoder.Compare(model.Password, validcustomer.password);
+
+                        if (ModelState.IsValid && isvalidcustomer)
+                        {
+
+                           
+                            //// Login In.    
+                            this.SignInUser(validcustomer.username, validcustomer.role_id, false);
+
+                            //// setting.    
+                            this.Session["role_id"] = validcustomer.role_id;
+
+                              
                         // Info.    
 
-                        return this.RedirectToLocal(returnUrl);
+                        return RedirectToAction("Index", "Home");
+
                     }
-                    else
-                    {
-                        // Setting.    
-                        ModelState.AddModelError(string.Empty, "Invalid username or password.");
+                        else
+                        {
+
+                            ModelState.AddModelError(string.Empty, "Invalid username or password.");
+                        ViewBag.Error = "Invalid username or password.";
+                        }
+
+
+                    // Initialization.    
+
+                  
                     }
-                }
+                
             }
             catch (Exception ex)
             {
@@ -204,70 +205,57 @@ namespace SampleProject.Controllers
         public ActionResult Register(RegisterViewModel newreg)
         {
 
-            //password hashing
-            string Encrypt(string clearText)
-            {
-                string EncryptionKey = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
-                byte[] clearBytes = Encoding.Unicode.GetBytes(clearText);
-                using (Aes encryptor = Aes.Create())
-                {
-                    Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
-                    encryptor.Key = pdb.GetBytes(32);
-                    encryptor.IV = pdb.GetBytes(16);
-                    using (MemoryStream ms = new MemoryStream())
-                    {
-                        using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateEncryptor(), CryptoStreamMode.Write))
-                        {
-                            cs.Write(clearBytes, 0, clearBytes.Length);
-                            cs.Close();
-                        }
-                        clearText = Convert.ToBase64String(ms.ToArray());
-                    }
-                }
-                return clearText;
-            }
-
-
-
-            
-
             try
             {
                 if (ModelState.IsValid)
                 {
+                    ScryptEncoder encoder = new ScryptEncoder();
+
                     using (var db = new RoleBaseAccessibilityEntities())
                     {
-                        Login relog = new Login();
-                        relog.username = newreg.UserName;
-                        relog.password = Encrypt((newreg.Password).Trim());
-                        relog.email = newreg.Email;
-                        relog.role_id = 2;
+                        var isregistereduser = (from c in db.Logins where c.username.Equals(newreg.UserName)
+                                                select c).SingleOrDefault();
 
-                        db.Logins.Add(relog);
-                        db.SaveChanges();
+                        if(isregistereduser == null)
+                        {
 
-                        //smtp mail
-                        //Configuring webMail class to send emails  
-                        //gmail smtp server  
-                        WebMail.SmtpServer = "smtp.gmail.com";
-                        //gmail port to send emails  
-                        WebMail.SmtpPort = 587;
-                        WebMail.SmtpUseDefaultCredentials = true;
-                        //sending emails with secure protocol  
-                        WebMail.EnableSsl = true;
-                        //EmailId used to send emails from application  
-                        WebMail.UserName = "Spectrumprojectmail@gmail.com";
-                        WebMail.Password = "sebin@1234";
+                            Login relog = new Login();
+                            relog.username = newreg.UserName;
+                            relog.password = encoder.Encode(newreg.Password);
+                            relog.email = newreg.Email;
+                            relog.role_id = 2;
 
-                        //Sender email address.  
-                        WebMail.From = newreg.Email;
-
-                        //Send email  
-                        WebMail.Send(to: newreg.Email, subject: "MyTube Registration Sucessfull", body: "Your MyTube Account is sucessfully registered.welcome to the world of unlimited free videos ", isBodyHtml: true);
-                        ViewBag.Status = "Email Sent Successfully.";
+                            db.Logins.Add(relog);
+                            db.SaveChanges();
 
 
-                        return RedirectToAction("Login", "Account");
+                            //smtp mail
+                            //Configuring webMail class to send emails  
+                            //gmail smtp server  
+                            WebMail.SmtpServer = "smtp.gmail.com";
+                            //gmail port to send emails  
+                            WebMail.SmtpPort = 587;
+                            WebMail.SmtpUseDefaultCredentials = true;
+                            //sending emails with secure protocol  
+                            WebMail.EnableSsl = true;
+                            //EmailId used to send emails from application  
+                            WebMail.UserName = "Spectrumprojectmail@gmail.com";
+                            WebMail.Password = "sebin@1234";
+
+                            //Sender email address.  
+                            WebMail.From = newreg.Email;
+
+                            //Send email  
+                            WebMail.Send(to: newreg.Email, subject: "MyTube Registration Sucessfull", body: "Your MyTube Account is sucessfully registered.welcome to the world of unlimited free videos ", isBodyHtml: true);
+
+                            return RedirectToAction("Login", "Account");
+                        }
+                        else
+                        {
+                            ViewBag.Error = "User Already Registered";
+                            return RedirectToAction("Register", "Account");
+                        }
+
                     }
                 }
                 return this.View();

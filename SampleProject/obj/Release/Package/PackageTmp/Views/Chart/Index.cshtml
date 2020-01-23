@@ -1,0 +1,190 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <script src="~/Scripts/bootstrap2-toggle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <style type="text/css">
+
+        .container {
+            width: 50%;
+            margin: 15px auto;
+        }
+    </style>
+</head>
+
+<div  id="accordion">
+    <div class="card">
+        <div class="card-header" id="headingOne" >
+            <h5 class="mb-0">
+                <button class="btn btn-block btn-primary" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Total Video Views
+                </button>
+            </h5>
+        </div>
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion" >
+            <div class="card-body">
+                
+                    <label>Select the Date</label>
+                    <input type="date" id="selecteddate" />
+              
+                <div>
+                    <label>Change Chart Type</label>
+                    <input onclick="GenerateRuntimeGraph(value)" id="btnpie" type="button" class="btn btn-success" value="pie">
+                    <input onclick="GenerateRuntimeGraph(value)" id="btndonut" type="button" class="btn btn-warning" value="doughnut">
+
+                </div>
+                <div>
+                    <canvas style="display:block;width: 200px;  height: 130px;" id="myChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingTwo">
+            <h5 class="mb-0">
+                <button class="btn btn-block btn-primary collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Total Video Download's
+                </button>
+            </h5>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion" >
+            <div class="card-body">
+                
+                    <label>Select the Date</label>
+                    <input type="date" id="selectedDownloaddate" />
+                
+                <div>
+                    <label>Change Chart Type</label>
+                    <input onclick="DownlodcountGraph(value)" id="btnpie1" type="button" class="btn btn-success" value="pie">
+                    <input onclick="DownlodcountGraph(value)" id="btndonut1" type="button" class="btn btn-warning" value="doughnut">
+
+                </div>
+                <div>
+                    <canvas style="display:block;width: 200px;  height: 130px;" id="myChart1"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+    <script>
+
+        function GenerateRuntimeGraph(type) {
+
+            var charttype = type
+            dateselected = $('#selecteddate').val();
+
+            $.ajax({
+                url: '/Chart/ShowChart',
+                type: "POST",
+                data: { selecteddate: dateselected },
+                success: function (response) {
+
+                    var result = response
+                    if (response.length != 0) {
+
+                        var ctx = document.getElementById("myChart").getContext('2d');
+                        var label = result.map((item) => { return item.VideoName })
+                        var data = result.map((item) => { return item.NoOfView })
+                        var myChart = new Chart(ctx,
+                            {
+                                type: charttype,
+                                data:
+                                {
+                                    labels: label,
+                                    datasets:
+                                        [{
+                                            backgroundColor: [
+                                                "#2ecc71",
+                                                "#3498db",
+                                                "#95a5a6",
+                                                "#9b59b6",
+                                                "#f1c40f",
+                                                "#e74c3c",
+                                                "#34495e"
+                                            ],
+                                            data: data
+                                        }]
+                                }
+                            });
+                    }
+                    else if (response.length == 0) {
+                        Swal.fire(
+                            'No data avaliable',
+                            'No data is avaliable for select date',
+                            'info'
+                        ).then(() => {
+                            window.location.href = '/Chart/Index'
+                        })
+                    }
+                }
+            })
+        }
+
+
+        function DownlodcountGraph(type) {
+            
+
+            var charttype = type
+            dateselected = $('#selectedDownloaddate').val();
+
+            $.ajax({
+                url: '/Chart/ShowChart1',
+                type: "POST",
+                data: { selecteddate: dateselected },
+                success: function (response) {
+                  
+                    var result = response
+                    if (response.length != 0) {
+
+                        var ctx = document.getElementById("myChart1").getContext('2d');
+                        var label = result.map((item) => { return item.VideoName })
+                        var data = result.map((item) => { return item.downloadcount })
+                        var myChart = new Chart(ctx,
+                            {
+                                type: charttype,
+                                data:
+                                {
+                                    labels: label,
+                                    datasets:
+                                        [{
+                                            backgroundColor: [
+                                                "#2ecc71",
+                                                "#3498db",
+                                                "#95a5a6",
+                                                "#9b59b6",
+                                                "#f1c40f",
+                                                "#e74c3c",
+                                                "#34495e"
+                                            ],
+                                            data: data
+                                        }]
+                                }
+                            });
+                    }
+                    else if (response.length == 0) {
+                        Swal.fire(
+                            'No data avaliable',
+                            'No data is avaliable for select date',
+                            'info'
+                        ).then(() => {
+                            window.location.href = '/Chart/Index'
+                        })
+                    }
+                }
+            })
+        }
+
+    </script>
+

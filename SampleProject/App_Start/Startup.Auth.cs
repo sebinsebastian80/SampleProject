@@ -22,7 +22,7 @@ namespace SampleProject
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Account/Login"),
                 LogoutPath = new PathString("/Account/LogOff"),
-                ExpireTimeSpan = TimeSpan.FromMinutes(30.0),
+                ExpireTimeSpan = TimeSpan.FromMinutes(120.0),
                 ReturnUrlParameter = "/Home/Index"
             });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);

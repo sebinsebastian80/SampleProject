@@ -6,7 +6,7 @@
     </Key>
     <Property Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
     <Property Name="username" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" Type="String" />
-    <Property Name="password" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" Type="String" />
+    <Property Name="password" MaxLength="200" FixedLength="false" Unicode="true" Type="String" />
     <Property Name="role_id" Nullable="false" Type="Int32" />
     <NavigationProperty Name="Role" Relationship="Self.R_10" FromRole="Login" ToRole="Role" />
     <Property Name="email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />

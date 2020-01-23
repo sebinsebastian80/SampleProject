@@ -90,7 +90,7 @@ namespace SampleProject.Controllers
                 SqlCommand cmd = new SqlCommand("spVideoCountNew", sqlconn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("VideoName", Vname);
-                cmd.Parameters.AddWithValue("videoId", VId);
+                cmd.Parameters.AddWithValue("VideoId", VId);
 
                 cmd.Parameters.AddWithValue("Viewdate", todaydate);
                 sqlconn.Open();
@@ -122,7 +122,7 @@ namespace SampleProject.Controllers
                 SqlCommand cmd = new SqlCommand("spDownloadCount", sqlconn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("VideoName", Vname);
-                cmd.Parameters.AddWithValue("videoId", VId);
+                cmd.Parameters.AddWithValue("VideoId", VId);
 
                 cmd.Parameters.AddWithValue("Viewdate", todaydate);
                 sqlconn.Open();
@@ -168,11 +168,6 @@ namespace SampleProject.Controllers
             }
         }
 
-        [Authorize(Roles = "1")]
-        public ActionResult AdminOnlyLink()
-        {
-            return View();
-        }
-  
+       
         }
 }

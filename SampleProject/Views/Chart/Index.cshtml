@@ -43,8 +43,8 @@
                     <input onclick="GenerateRuntimeGraph(value)" id="btndonut" type="button" class="btn btn-warning" value="doughnut">
 
                 </div>
-                <div>
-                    <canvas style="display:block;width: 200px;  height: 130px;" id="myChart"></canvas>
+                <div id="downloadChart">
+                   
                 </div>
             </div>
         </div>
@@ -70,8 +70,8 @@
                     <input onclick="DownlodcountGraph(value)" id="btndonut1" type="button" class="btn btn-warning" value="doughnut">
 
                 </div>
-                <div>
-                    <canvas style="display:block;width: 200px;  height: 130px;" id="myChart1"></canvas>
+                <div id="viewChart">
+                  
                 </div>
             </div>
         </div>
@@ -93,7 +93,8 @@
 
                     var result = response
                     if (response.length != 0) {
-
+                        $('#downloadChart').empty();
+                        $('#downloadChart').append('<canvas style="display:block;width: 200px;  height: 130px;" id="myChart"></canvas>');
                         var ctx = document.getElementById("myChart").getContext('2d');
                         var label = result.map((item) => { return item.VideoName })
                         var data = result.map((item) => { return item.NoOfView })
@@ -144,10 +145,11 @@
                 type: "POST",
                 data: { selecteddate: dateselected },
                 success: function (response) {
-                  
+                   
                     var result = response
-                    if (response.length != 0) {
-
+                    if (response.length != 0 && response.every(function (item) { return item.downloadcount == 0 }) == false) {
+                        $('#viewChart').empty()
+                        $('#viewChart').append('<canvas style="display:block;width: 200px;  height: 130px;" id="myChart1"></canvas>');
                         var ctx = document.getElementById("myChart1").getContext('2d');
                         var label = result.map((item) => { return item.VideoName })
                         var data = result.map((item) => { return item.downloadcount })
@@ -173,7 +175,8 @@
                                 }
                             });
                     }
-                    else if (response.length == 0) {
+                    else
+                    {
                         Swal.fire(
                             'No data avaliable',
                             'No data is avaliable for select date',

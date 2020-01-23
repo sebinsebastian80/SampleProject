@@ -214,3 +214,9 @@ F:\Sebin_training_project\SampleProject\VideoPlayer-in-MVC-with-Role-Authenicati
 F:\Sebin_training_project\SampleProject\VideoPlayer-in-MVC-with-Role-Authenication\SampleProject\bin\Microsoft.AspNet.SignalR.Core.xml
 F:\Sebin_training_project\SampleProject\VideoPlayer-in-MVC-with-Role-Authenication\SampleProject\bin\Microsoft.AspNet.SignalR.SystemWeb.pdb
 F:\Sebin_training_project\SampleProject\VideoPlayer-in-MVC-with-Role-Authenication\SampleProject\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
+F:\Sebin_training_project\SampleProject\VideoPlayer-in-MVC-with-Role-Authenication\SampleProject\bin\Scrypt.dll
+F:\Sebin_training_project\SampleProject\VideoPlayer-in-MVC-with-Role-Authenication\SampleProject\bin\fr\SampleProject.resources.dll
+F:\Sebin_training_project\SampleProject\VideoPlayer-in-MVC-with-Role-Authenication\SampleProject\obj\Debug\SampleProject.Resources.HomeText.resources
+F:\Sebin_training_project\SampleProject\VideoPlayer-in-MVC-with-Role-Authenication\SampleProject\obj\Debug\SampleProject.Resources.HomeText.fr.resources
+F:\Sebin_training_project\SampleProject\VideoPlayer-in-MVC-with-Role-Authenication\SampleProject\obj\Debug\SampleProject.csproj.GenerateResource.cache
+F:\Sebin_training_project\SampleProject\VideoPlayer-in-MVC-with-Role-Authenication\SampleProject\obj\Debug\fr\SampleProject.resources.dll

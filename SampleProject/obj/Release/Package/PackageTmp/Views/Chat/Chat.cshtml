@@ -1,0 +1,77 @@
+﻿<style>
+    div.panel-body {
+        overflow: scroll;
+        background: url('http://subtlepatterns.com/patterns/geometry2.png');
+    }
+</style>
+<h2>ChatBox</h2>
+<div class="chat-panel panel panel-default">
+    <div class="panel-heading">
+        ChatBox using SingalR
+        <i class="fa fa-paper-plane fa-fw"></i>
+    </div>
+    <!-- /.panel-heading -->
+    <div class="panel-body" id="chat" style="height:250px;">
+        <input type="hidden" id="displayname" />
+
+        <p id="discussion"></p>
+    </div>
+    <!-- /.panel-body -->
+    <div class="panel-footer">
+        <div class="input-group">
+            <input id="message" type="text" name="message" class="form-control input-sm" placeholder="Type your message here..." />
+
+            <span class="input-group-btn">
+                <input type="submit" class="btn btn-warning btn-sm" id="sendmessage" value="Send">
+
+            </span>
+        </div>
+    </div>
+</div>
+@section scripts {
+
+    <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+
+    <script>
+        $(function () {
+            debugger;
+            var chat = $.connection.chatHub;
+
+            chat.client.addNewMessageToPage = function (name, message) {
+                if (name == "admin") {
+
+                    $('#discussion').append('<p style="color:green; text-align:left;text-transform:inherit; width:500px"><strong><img = src="https://www.phplivesupport.com/pics/icons/avatars/public/avatar_7.png" title="Admin">'
+                        + ' </strong> ' + htmlEncode(message) + '</p>');
+
+                }
+                else if (name != "admin") {
+
+                    $('#discussion').append('<p style="color:blue;text-align:right;"><strong><img = src="https://www.phplivesupport.com/pics/icons/avatars/public/avatar_71.png" title="User">'
+                        + ' </strong> ' + htmlEncode(message) + '</p>');
+
+                }
+                $('.panel-body').scrollTop($('#discussion')[0].scrollHeight)
+            };
+
+            $('#displayname').val(prompt('Enter your name:', ''));
+
+            $('#message').focus();
+
+            $.connection.hub.start().done(function () {
+                $('#sendmessage').click(function () {
+
+                    chat.server.send($('#displayname').val(), $('#message').val());
+
+                    $('#message').val('').focus();
+                });
+            });
+        });
+        // This optional function html-encodes messages for display in the page.
+        function htmlEncode(value) {
+            var encodedValue = $('<div />').text(value).html();
+            return encodedValue;
+        }
+    </script>
+}
+
