@@ -223,7 +223,7 @@ namespace SampleProject.Controllers
                             relog.username = newreg.UserName;
                             relog.password = encoder.Encode(newreg.Password);
                             relog.email = newreg.Email;
-                            relog.role_id = 2;
+                            relog.role_id =2;
 
                             db.Logins.Add(relog);
                             db.SaveChanges();

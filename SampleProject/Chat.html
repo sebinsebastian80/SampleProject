@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+    <link href="Content/login.css" rel="stylesheet" />
+</head>
+<body>
+    
+    <div id="body">
+
+        <div id="chat-circle" class="btn btn-raised">
+            <div id="chat-overlay"></div>
+            <i class="material-icons">speaker_phone</i>
+        </div>
+
+        <div class="chat-box">
+            <div class="chat-box-header">
+                ChatBot
+                <span class="chat-box-toggle"><i class="material-icons">close</i></span>
+            </div>
+            <div class="chat-box-body">
+                <div class="chat-box-overlay">
+                </div>
+                <div class="chat-logs">
+
+                </div><!--chat-log -->
+            </div>
+            <div class="chat-input">
+                <form>
+                    <input type="text" id="chat-input" placeholder="Send a message..." />
+                    <button type="submit" class="chat-submit" id="chat-submit"><i class="material-icons">send</i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="Scripts/jquery-3.3.1.js"></script>
+
+    <script src="Scripts/login.js"></script>
+</body>
+</html>
